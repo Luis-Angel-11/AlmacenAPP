@@ -2,19 +2,9 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/vista/Proveedores.java</file>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/conexion/SQLConexion.java</file>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/estructuras/HashClientes.java</file>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/clases/Clientes.java</file>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/vista/Principal.java</file>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/interfaces/FrameLogin.java</file>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/vista/Cliente.java</file>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/interfaces/FrameMenu.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/Almacen/src/interfaces/FrameLogin.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/Almacen/src/vista/Inventario.java</file>
         </group>
->>>>>>> ca61babb256c1c1c57c3d8f99ed1ee95e4690f40
     </open-files>
 </project-private>
