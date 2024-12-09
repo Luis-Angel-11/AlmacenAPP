@@ -29,10 +29,14 @@ public class FrameMenu extends javax.swing.JFrame {
 
     proveedor pro = new proveedor();
     proveedorDao pd = new proveedorDao();
+    
+    
+    
 
     public FrameMenu() {
         initComponents();
         InitContent();
+        this.setLocationRelativeTo(null);
         
     }
     
