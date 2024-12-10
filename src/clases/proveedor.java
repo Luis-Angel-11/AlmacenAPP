@@ -65,10 +65,15 @@ public class proveedor {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+    public proveedor(int id_proveedor, String nombre) {
+    this.id_proveedor = id_proveedor;
+    this.nombre = nombre;
+    }
 
-    
-    
-    
+    @Override
+    public String toString() {
+    return this.nombre; // Esto asegura que se muestre el nombre del proveedor en el JComboBox
+    }
     
     
 }

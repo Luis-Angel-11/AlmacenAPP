@@ -1,18 +1,17 @@
 package clases;
 
 public class Clientes {
-    
-    private String nombre;
     private String dni;
+    private String nombre;
     private String apellido;
     private String sexo;
     private String telefono;
     private String ciudad;
     private String email;
 
-    public Clientes(String nombre, String dni, String apellido, String sexo, String telefono, String ciudad, String email) {
-        this.nombre = nombre;
+    public Clientes(String dni, String nombre, String apellido, String sexo, String telefono, String ciudad, String email) {
         this.dni = dni;
+        this.nombre = nombre;
         this.apellido = apellido;
         this.sexo = sexo;
         this.telefono = telefono;
