@@ -9,6 +9,7 @@ package clases;
  * @author ASUS
  */
 public class Nodo1<T> {
+    
     T clase;
     Nodo1<T> siguiente;
 
@@ -17,5 +18,14 @@ public class Nodo1<T> {
         this.siguiente = null;
     }
     
+    // Método para obtener el dato del nodo
+    public T getClase() {
+        return clase;
+    }
+
+    // Método para obtener el siguiente nodo
+    public Nodo1<T> getSiguiente() {
+        return siguiente;
+    }
     
 }

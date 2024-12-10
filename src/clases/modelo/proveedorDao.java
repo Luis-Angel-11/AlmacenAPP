@@ -171,7 +171,7 @@ public class proveedorDao {
         listarProveedor().setCabeza(cabeza);   
         
         Proveedores lim = new Proveedores();
-        lim.limpiarTabla();
+        //lim.limpiarTabla();
         listarProveedor();
     }
     
