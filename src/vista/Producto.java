@@ -6,6 +6,7 @@ import clases.proveedor;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import estructuras.ListaProducto;
 
 
 /**
@@ -54,6 +55,11 @@ public class Producto extends javax.swing.JPanel {
         jPanelListaP = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        jTextBuscar = new javax.swing.JTextField();
+        jButtonBuscar = new javax.swing.JButton();
+        jButtonOrdenar = new javax.swing.JButton();
+        jButtonEliminar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(650, 420));
@@ -145,7 +151,36 @@ public class Producto extends javax.swing.JPanel {
     );
     jScrollPane1.setViewportView(jTable1);
 
-    jPanelListaP.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 440, 310));
+    jPanelListaP.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 550, 240));
+
+    jLabel4.setText("Buscar por nombre:");
+    jPanelListaP.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, 20));
+
+    jTextBuscar.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jTextBuscarActionPerformed(evt);
+        }
+    });
+    jPanelListaP.add(jTextBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 250, -1));
+
+    jButtonBuscar.setText("Buscar");
+    jPanelListaP.add(jButtonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 90, -1));
+
+    jButtonOrdenar.setText("Ordenar");
+    jButtonOrdenar.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButtonOrdenarActionPerformed(evt);
+        }
+    });
+    jPanelListaP.add(jButtonOrdenar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 130, -1));
+
+    jButtonEliminar.setText("Eliminar");
+    jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButtonEliminarActionPerformed(evt);
+        }
+    });
+    jPanelListaP.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 330, 130, -1));
 
     jTabbedPane1.addTab("Lista", jPanelListaP);
 
@@ -183,7 +218,7 @@ public class Producto extends javax.swing.JPanel {
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         // Verificar que todos los campos estén llenos
-    if (TextID.getText().isEmpty() || TextNombre.getText().isEmpty() || TextPrecio.getText().isEmpty() || 
+        if (TextID.getText().isEmpty() || TextNombre.getText().isEmpty() || TextPrecio.getText().isEmpty() || 
         TextCantidad.getText().isEmpty() || TextCategoria.getText().isEmpty() || 
         jComboProveedor.getSelectedItem() == null || jComboEstado.getSelectedItem() == null) {
         JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.");
@@ -205,15 +240,20 @@ public class Producto extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un proveedor.");
             return; // Salir si no se ha seleccionado proveedor
         }
+
         // Crear un producto con los datos
         producto nuevoProducto = new producto(id, nombre, precio, cantidad, proveedorSeleccionado, categoria, estado);
         // Llamar al método para agregar el producto a la base de datos
         productoBD productoBD = new productoBD();
         boolean exito = productoBD.agregarProducto(nuevoProducto);
+
         if (exito) {
             JOptionPane.showMessageDialog(this, "Producto agregado correctamente.");
             limpiarCampos(); // Limpia los campos después de insertar
-            cargarProductosEnTabla();
+
+            // Reutilizar la instancia productoBD para listar productos
+            List<producto> listaProductos = productoBD.listarProductos();
+            cargarProductosEnTabla(listaProductos);
         } else {
             JOptionPane.showMessageDialog(this, "Error al agregar el producto.");
         }
@@ -222,15 +262,34 @@ public class Producto extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
+    private void jTextBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextBuscarActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButtonOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrdenarActionPerformed
+        // TODO add your handling code here:
+        productoBD productoBD = new productoBD();
+        List<producto> productosOrdenados = productoBD.ordenarProductosPorPrecio();
+        cargarProductosEnTabla(productosOrdenados);
+    }//GEN-LAST:event_jButtonOrdenarActionPerformed
+
     private void configurarEventos() {
     jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
         public void stateChanged(javax.swing.event.ChangeEvent evt) {
             if (jTabbedPane1.getSelectedIndex() == 1) { // Índice 1 corresponde a la pestaña "Lista"
-                cargarProductosEnTabla(); // Llamar al método que carga los datos en la tabla
+                productoBD productoBD = new productoBD();
+                List<producto> listaProductos = productoBD.listarProductos(); // Obtén la lista desde la base de datos
+                cargarProductosEnTabla(listaProductos); // Pasa la lista como argumento
+
             }
         }
     });
     }
+
     private void limpiarCampos() {
     TextID.setText("");
     TextNombre.setText("");
@@ -256,17 +315,11 @@ public class Producto extends javax.swing.JPanel {
     }
     }
     
-    private void cargarProductosEnTabla() {
-    // Crear una instancia de productoBD para obtener los productos
-    productoBD productoBD = new productoBD();
-    List<producto> producto = productoBD.listarProductos(); // Obtener productos desde la base de datos
-
-    // Crear el modelo de la tabla si no lo tienes definido
+    private void cargarProductosEnTabla(List<producto> listaProductos) {
     String[] columnNames = {"ID", "Nombre", "Precio", "Cantidad", "Categoría", "Estado", "Proveedor"};
     javax.swing.table.DefaultTableModel modeloTabla = new javax.swing.table.DefaultTableModel(columnNames, 0);
 
-    // Agregar los productos al modelo de la tabla
-    for (producto p : producto) {
+    for (producto p : listaProductos) {
         Object[] fila = {
             p.getId(),
             p.getNombre(),
@@ -274,12 +327,11 @@ public class Producto extends javax.swing.JPanel {
             p.getCantidad(),
             p.getCategoria(),
             p.getEstado(),
-            p.getProveedor().getNombre() // Asegúrate de que `getNombre()` esté implementado en tu clase `proveedor`
+            p.getProveedor().getNombre()
         };
         modeloTabla.addRow(fila);
     }
 
-    // Asignar el modelo a la tabla
     jTable1.setModel(modeloTabla);
     }
 
@@ -295,16 +347,21 @@ public class Producto extends javax.swing.JPanel {
     private javax.swing.JTextField TextID;
     private javax.swing.JTextField TextNombre;
     private javax.swing.JTextField TextPrecio;
+    private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonEliminar;
+    private javax.swing.JButton jButtonOrdenar;
     private javax.swing.JComboBox<String> jComboEstado;
     private javax.swing.JComboBox<proveedor> jComboProveedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanelListaP;
     private javax.swing.JPanel jPanelRegistroP;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextBuscar;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

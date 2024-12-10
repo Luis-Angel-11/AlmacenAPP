@@ -5,7 +5,7 @@ public class producto {
     private String nombre;
     private double precio;
     private int cantidad;
-    private proveedor proveedor; // Asegúrate de que no sea null
+    private proveedor proveedor; 
     private String categoria;
     private String estado;
     // Constructor para inicializar todos los atributos, incluyendo el ID
