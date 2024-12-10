@@ -67,7 +67,7 @@ public class Inventario extends javax.swing.JPanel {
     void deshabilitar(){
         List<JTextField> textFields = Arrays.asList(txtID, txtCantidad, txtCodigo);
         textFields.forEach(field -> field.setEnabled(false));
-        btnEliminar.setEnabled(false);
+        
         btnGuardar.setEnabled(false);
         btnEditar.setEnabled(false);
         rbtnIngreso.setEnabled(false);
@@ -138,7 +138,6 @@ public class Inventario extends javax.swing.JPanel {
         txtCodigo = new javax.swing.JTextField();
         txtCantidad = new javax.swing.JTextField();
         txtID = new javax.swing.JTextField();
-        btnEliminar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -162,6 +161,12 @@ public class Inventario extends javax.swing.JPanel {
         lblMovimientos = new javax.swing.JLabel();
         lblIngreso = new javax.swing.JLabel();
         lblSalida = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(70, 130, 188));
+
+        jTabbedPane1.setBackground(new java.awt.Color(70, 130, 188));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -187,13 +192,6 @@ public class Inventario extends javax.swing.JPanel {
         rbtnSalida.setText("Salida");
 
         cbxMotivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione--", "Venta", "Compra", "Devolucion", "Donacion" }));
-
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
 
         jLabel4.setText("IDMovimiento");
 
@@ -224,7 +222,7 @@ public class Inventario extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -244,9 +242,8 @@ public class Inventario extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnNuevo)
                     .addComponent(btnEditar)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnEliminar))
-                .addGap(20, 20, 20))
+                    .addComponent(btnGuardar))
+                .addGap(21, 21, 21))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,18 +275,18 @@ public class Inventario extends javax.swing.JPanel {
                             .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
+                        .addGap(25, 25, 25)
                         .addComponent(btnNuevo)
-                        .addGap(42, 42, 42)
+                        .addGap(46, 46, 46)
                         .addComponent(btnEditar)
-                        .addGap(55, 55, 55)
-                        .addComponent(btnGuardar)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnEliminar)))
-                .addGap(73, 73, 73))
+                        .addGap(40, 40, 40)
+                        .addComponent(btnGuardar)))
+                .addGap(86, 86, 86))
         );
 
         jTabbedPane1.addTab("Lista", jPanel1);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         TablaMovimientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -376,7 +373,7 @@ public class Inventario extends javax.swing.JPanel {
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblSalida)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                                 .addComponent(btnOrdenar)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnEliminarC)
@@ -465,7 +462,7 @@ public class Inventario extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Por favor, selecciona un producto en la tabla para editar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            btnEliminar.setEnabled(rbtnSalida.isSelected());
+            //btnEliminar.setEnabled(rbtnSalida.isSelected());
             btnGuardar.setEnabled(rbtnIngreso.isSelected()|| rbtnSalida.isSelected());
             int id = (int) Tabla.getValueAt(index, 0);
             Productos producto = lista.stream()
@@ -620,10 +617,6 @@ public class Inventario extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtBusquedaKeyReleased
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tabla;
@@ -631,7 +624,6 @@ public class Inventario extends javax.swing.JPanel {
     private javax.swing.ButtonGroup botones;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnEliminarC;
     private javax.swing.JButton btnFiltrar;
     private javax.swing.JButton btnGuardar;
