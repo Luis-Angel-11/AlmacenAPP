@@ -3,14 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/vista/Proveedores.java</file>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/conexion/SQLConexion.java</file>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/estructuras/HashClientes.java</file>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/clases/Clientes.java</file>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/vista/Principal.java</file>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/interfaces/FrameLogin.java</file>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/vista/Cliente.java</file>
-            <file>file:/C:/Users/Joel/Documents/NetBeansProjects/AlmacenAPP/src/interfaces/FrameMenu.java</file>
+<<<<<<< HEAD
+            <file>file:/C:/Users/bruno/OneDrive%20-%20Universidad%20Tecnologica%20del%20Peru/Desktop/Proyecto%20Algortimos/AlmacenAPP/src/vista/Proveedores.java</file>
+            <file>file:/C:/Users/bruno/OneDrive%20-%20Universidad%20Tecnologica%20del%20Peru/Desktop/Proyecto%20Algortimos/AlmacenAPP/src/interfaces/FrameMenu.java</file>
+=======
+            <file>file:/C:/Users/ASUS/Desktop/Almacen/src/interfaces/FrameLogin.java</file>
+            <file>file:/C:/Users/ASUS/Desktop/Almacen/src/vista/Inventario.java</file>
+>>>>>>> 2166bd0128a7250fca94318dac5382f2b15e0ce7
         </group>
     </open-files>
 </project-private>
