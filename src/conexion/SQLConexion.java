@@ -37,14 +37,4 @@ public class SQLConexion {
         }
         return cn;
     }
-
-
-
-    
- 
-    
-    
-    
-    
-    
 }
