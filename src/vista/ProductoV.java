@@ -125,6 +125,7 @@ public class ProductoV extends javax.swing.JPanel {
         TextNombre = new javax.swing.JTextField();
         TextID = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -190,7 +191,7 @@ public class ProductoV extends javax.swing.JPanel {
                 TextPrecioActionPerformed(evt);
             }
         });
-        jPanel1.add(TextPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, 110, -1));
+        jPanel1.add(TextPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 90, -1));
 
         TextNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -209,6 +210,9 @@ public class ProductoV extends javax.swing.JPanel {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ImgProductos.jpg"))); // NOI18N
         jLabel3.setText("jLabel3");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 300, 300));
+
+        jLabel5.setText("S/.");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, 20, 20));
 
         jTabbedPane1.addTab("Registro", jPanel1);
 
@@ -415,6 +419,7 @@ public class ProductoV extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
