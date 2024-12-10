@@ -75,19 +75,20 @@ public class productoBD {
 
     // Método para eliminar un producto por nombre
     public boolean eliminarProducto(String nombre) {
-        String sql = "DELETE FROM producto WHERE nombre = ?";
-        try (Connection con = cn.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+    String sql = "DELETE FROM producto WHERE nombre = ?";
+    try (Connection con = cn.conectar();
+         PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, nombre);
+        ps.setString(1, nombre);
 
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            System.out.println("Error al eliminar producto: " + e.toString());
-            return false;
-        }
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected > 0; // Retorna true si el producto fue eliminado
+    } catch (SQLException e) {
+        System.out.println("Error al eliminar producto: " + e.toString());
+        return false;
     }
+    }
+
 
     // Método para modificar un producto
     public boolean modificarProducto(producto p) {
@@ -174,7 +175,7 @@ public class productoBD {
         int filasEliminadas = ps.executeUpdate();
         return filasEliminadas > 0; // Retorna true si se eliminó correctamente
     } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al eliminar el producto: " + e.toString());
+        JOptionPane.showMessageDialog(null, "Error al eliminar el producto: " + e.getMessage());
         return false;
     }
     }
@@ -215,5 +216,4 @@ public class productoBD {
 
     return null; // Retorna null si no se encontró
     }
-
 }
