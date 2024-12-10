@@ -38,11 +38,12 @@ public class productoBD {
 
     // Método para listar todos los productos
     public List<producto> listarProductos() {
-    List<producto> listaProductos = new ArrayList<>();
+    List<producto> listaProductos = new ArrayList<>(); // Declarar la lista aquí
+
     String sql = "SELECT p.id_producto, p.nombre, p.precio, p.cantidad, p.categoria, p.estado, " +
                  "pr.id_proveedor, pr.nombre AS nombre_proveedor " +
-                 "FROM productos p " +
-                 "JOIN proveedores pr ON p.id_proveedor = pr.id_proveedor";
+                 "FROM producto p " +  
+                 "JOIN proveedor pr ON p.id_proveedor = pr.id_proveedor";  
 
     try (Connection con = cn.conectar();
          PreparedStatement ps = con.prepareStatement(sql);
@@ -70,7 +71,7 @@ public class productoBD {
     }
 
     return listaProductos;
-}
+    }
 
 
     // Método para eliminar un producto por nombre
