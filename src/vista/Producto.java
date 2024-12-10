@@ -60,6 +60,7 @@ public class Producto extends javax.swing.JPanel {
         jButtonBuscar = new javax.swing.JButton();
         jButtonOrdenar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
+        jButtonActualizar = new javax.swing.JToggleButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(650, 420));
@@ -182,6 +183,14 @@ public class Producto extends javax.swing.JPanel {
     });
     jPanelListaP.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 330, 130, -1));
 
+    jButtonActualizar.setText("Actualizar");
+    jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButtonActualizarActionPerformed(evt);
+        }
+    });
+    jPanelListaP.add(jButtonActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, 130, -1));
+
     jTabbedPane1.addTab("Lista", jPanelListaP);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -277,6 +286,10 @@ public class Producto extends javax.swing.JPanel {
         cargarProductosEnTabla(productosOrdenados);
     }//GEN-LAST:event_jButtonOrdenarActionPerformed
 
+    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonActualizarActionPerformed
+
     private void configurarEventos() {
     jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
         public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -347,6 +360,7 @@ public class Producto extends javax.swing.JPanel {
     private javax.swing.JTextField TextID;
     private javax.swing.JTextField TextNombre;
     private javax.swing.JTextField TextPrecio;
+    private javax.swing.JToggleButton jButtonActualizar;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonOrdenar;
