@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import vista.Cliente;
 import vista.Home;
 import vista.Inventario;
-import vista.Producto;
+//import vista.Producto;
 import vista.Proveedores;
 
 /**
@@ -218,7 +218,7 @@ public class FrameMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProveedoresActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-        VistaPanel(new Producto());
+        //VistaPanel(new Producto());
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
