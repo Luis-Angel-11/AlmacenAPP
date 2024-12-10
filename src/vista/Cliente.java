@@ -16,7 +16,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import java.sql.ResultSet;
-
+import clases.Orden; // Asegúrate de que la ruta del paquete sea correcta
+import estructuras.ArbolOrdenes;
+import java.util.Optional;
+import conexion.ApiConsumer;
+import javax.swing.SwingWorker;
 /**
  *
  * @author ASUS
@@ -24,7 +28,8 @@ import java.sql.ResultSet;
 public class Cliente extends javax.swing.JPanel {
     private LinkedList<Clientes> listaClientes;
     private HashClientes tablaClientes;
-
+    private ArbolOrdenes arbolOrdenes;
+    private ApiConsumer apiConsumer;
     /**
      * Creates new form Proveedores
      */
@@ -32,8 +37,10 @@ public class Cliente extends javax.swing.JPanel {
         initComponents();
         
         tablaClientes = new HashClientes();
-        tablaClientes.cargarClientesDesdeBD();
+        tablaClientes.cargarClientesDesdeBD();  
         mostrarClientesEnTabla();
+        
+        apiConsumer = new ApiConsumer();
         
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,7 +79,7 @@ public class Cliente extends javax.swing.JPanel {
     
     if (selectedRow >= 0) {
         String dniSeleccionado = jTable2.getValueAt(selectedRow, 0).toString();
-        String nombre = jTable2.getValueAt(selectedRow, 1).toString();
+        String nombres = jTable2.getValueAt(selectedRow, 1).toString();
         String apellido = jTable2.getValueAt(selectedRow, 2).toString();
         String sexo = jTable2.getValueAt(selectedRow, 3).toString();
         String telefono = jTable2.getValueAt(selectedRow, 4).toString();
@@ -80,7 +87,7 @@ public class Cliente extends javax.swing.JPanel {
         String email = jTable2.getValueAt(selectedRow, 6).toString();
         
         jTextField1.setText(dniSeleccionado);
-        jTextField2.setText(nombre);
+        jTextField2.setText(nombres);
         jTextField3.setText(apellido);
         jComboBox1.setSelectedItem(sexo);
         jTextField4.setText(telefono);
@@ -106,14 +113,14 @@ public void mostrarClientesEnTabla() {
 
         while (rs.next()) {
             String dni = rs.getString("dni");
-            String nombre = rs.getString("nombre");
+            String nombres = rs.getString("nombre");
             String apellido = rs.getString("apellido");
             String sexo = rs.getString("sexo");
             String telefono = rs.getString("telefono");
             String ciudad = rs.getString("ciudad");
             String email = rs.getString("email");
 
-            modelo.addRow(new Object[]{dni, nombre, apellido, sexo, telefono, ciudad, email});
+            modelo.addRow(new Object[]{dni, nombres, apellido, sexo, telefono, ciudad, email});
         }
 
     } catch (SQLException e) {
@@ -135,7 +142,7 @@ public void agregarCliente(Clientes cliente) {
         return; 
     }
 
-    if (cliente.getNombre().isEmpty() || cliente.getApellido().isEmpty() || cliente.getTelefono().isEmpty() ||
+    if (cliente.getNombres().isEmpty() || cliente.getApellido().isEmpty() || cliente.getTelefono().isEmpty() ||
         cliente.getCiudad().isEmpty() || cliente.getEmail().isEmpty()) {
         JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
         return; 
@@ -158,7 +165,7 @@ public void agregarCliente(Clientes cliente) {
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, cliente.getDni());
-        pstmt.setString(2, cliente.getNombre());
+        pstmt.setString(2, cliente.getNombres());
         pstmt.setString(3, cliente.getApellido());
         pstmt.setString(4, cliente.getSexo());
         pstmt.setString(5, cliente.getTelefono());
@@ -475,7 +482,7 @@ private void eliminarCliente(java.awt.event.ActionEvent evt) {
                             .addComponent(jButton2))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Registro", jPanel1);
@@ -492,29 +499,133 @@ private void eliminarCliente(java.awt.event.ActionEvent evt) {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    String dni = jTextField1.getText().trim();
+
+    if (dni.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese un DNI.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
+
+    SwingWorker<Optional<Clientes>, Void> worker = new SwingWorker<>() {
+        @Override
+        protected Optional<Clientes> doInBackground() throws Exception {
+            return apiConsumer.obtenerClientePorDNI(dni);
+        }
+
+        @Override
+        protected void done() {
+            try {
+                Optional<Clientes> clienteOpt = get();
+
+                if (clienteOpt.isPresent()) {
+                    Clientes cliente = clienteOpt.get();
+
+                    jTextField2.setText(cliente.getNombres());
+                    jTextField3.setText(cliente.getApellido());
+
+                    jComboBox1.setSelectedItem(cliente.getSexo());
+                    jTextField4.setText(cliente.getTelefono());
+                    jTextField5.setText(cliente.getCiudad());
+                    jTextField6.setText(cliente.getEmail());
+
+                    JOptionPane.showMessageDialog(Cliente.this, "Datos del cliente actualizados desde la API.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(Cliente.this, "No se encontraron datos para el DNI ingresado.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(Cliente.this, "Error al consultar la API: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            } finally {
+                setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+            }
+        }
+    };
+
+    worker.execute();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String dni = jTextField1.getText().trim();
+        String nombres = jTextField2.getText().trim();
+        String apellido = jTextField3.getText().trim();
+        String sexo = (String) jComboBox1.getSelectedItem();
+        String telefono = jTextField4.getText().trim();
+        String ciudad = jTextField5.getText().trim();
+        String email = jTextField6.getText().trim();
+
+        if (dni.isEmpty() || nombres.isEmpty() || apellido.isEmpty() || sexo.equals("Seleccionar") ||
+            telefono.isEmpty() || ciudad.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        SQLConexion conexion = SQLConexion.getConexion();
+        Connection conn = conexion.conectar();
+        String sql = "UPDATE clientes SET nombre = ?, apellido = ?, sexo = ?, telefono = ?, ciudad = ?, email = ? WHERE dni = ?";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, nombres);
+            pstmt.setString(2, apellido);
+            pstmt.setString(3, sexo);
+            pstmt.setString(4, telefono);
+            pstmt.setString(5, ciudad);
+            pstmt.setString(6, email);
+            pstmt.setString(7, dni);
+
+            int filasAfectadas = pstmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(this, "Cliente actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+                mostrarClientesEnTabla();
+
+                jTextField1.setText("");
+                jTextField2.setText("");
+                jTextField3.setText("");
+                jComboBox1.setSelectedIndex(0);
+                jTextField4.setText("");
+                jTextField5.setText("");
+                jTextField6.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo actualizar el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         String dni = jTextField1.getText();
-        String nombre = jTextField2.getText();
+        String nombres = jTextField2.getText();
         String apellido = jTextField3.getText();
         String sexo = (String) jComboBox1.getSelectedItem();
         String telefono = jTextField4.getText();
         String ciudad = jTextField5.getText();
         String email = jTextField6.getText();
 
-        // Creamos un objeto Cliente con los datos obtenidos
-        Clientes cliente = new Clientes(dni, nombre, apellido, sexo, telefono, ciudad, email);
+        Clientes cliente = new Clientes(dni, nombres, apellido, sexo, telefono, ciudad, email);
 
-        // Llamamos al método para agregar el cliente
         agregarCliente(cliente);
 
-        // Limpiar los campos después de agregar el cliente
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jComboBox1.setSelectedIndex(0);
-        jTextField4.setText("");
-        jTextField5.setText("");
-        jTextField6.setText("");
+        limpiarCampos();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
@@ -522,7 +633,7 @@ private void eliminarCliente(java.awt.event.ActionEvent evt) {
     }//GEN-LAST:event_jTextField6ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        buscarCliente(); 
+        buscarCliente();
     }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
@@ -536,101 +647,30 @@ private void eliminarCliente(java.awt.event.ActionEvent evt) {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-         String dni = jTextField1.getText().trim();
-    String nombre = jTextField2.getText().trim();
-    String apellido = jTextField3.getText().trim();
-    String sexo = (String) jComboBox1.getSelectedItem();
-    String telefono = jTextField4.getText().trim();
-    String ciudad = jTextField5.getText().trim();
-    String email = jTextField6.getText().trim();
-
-    if (dni.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || sexo.equals("Seleccionar") ||
-        telefono.isEmpty() || ciudad.isEmpty() || email.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    SQLConexion conexion = SQLConexion.getConexion();
-    Connection conn = conexion.conectar();
-    String sql = "UPDATE clientes SET nombre = ?, apellido = ?, sexo = ?, telefono = ?, ciudad = ?, email = ? WHERE dni = ?";
-
-    try {
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-
-       
-        pstmt.setString(1, nombre);
-        pstmt.setString(2, apellido);
-        pstmt.setString(3, sexo);
-        pstmt.setString(4, telefono);
-        pstmt.setString(5, ciudad);
-        pstmt.setString(6, email);
-        pstmt.setString(7, dni);
-
-        int filasAfectadas = pstmt.executeUpdate();
-
-        if (filasAfectadas > 0) {
-            JOptionPane.showMessageDialog(this, "Cliente actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-            mostrarClientesEnTabla();
-
-            jTextField1.setText("");
-            jTextField2.setText("");
-            jTextField3.setText("");
-            jComboBox1.setSelectedIndex(0);
-            jTextField4.setText("");
-            jTextField5.setText("");
-            jTextField6.setText("");
-        } else {
-            JOptionPane.showMessageDialog(this, "No se pudo actualizar el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        try {
-            if (conn != null && !conn.isClosed()) {
-                conn.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
     private void buscarCliente() {
     String dni = jTextField1.getText().trim();  
-    String nombre = jTextField2.getText().trim(); 
+    String nombres= jTextField2.getText().trim(); 
     String apellido = jTextField3.getText().trim();  
 
     DefaultTableModel modelo = (DefaultTableModel) jTable2.getModel();
     modelo.setRowCount(0);  
 
-    Clientes clienteEncontrado = tablaClientes.buscarCliente(dni, nombre, apellido);
+    Clientes clienteEncontrado = tablaClientes.buscarCliente(dni, nombres, apellido);
 
     if (clienteEncontrado != null) {
         modelo.addRow(new Object[]{
             clienteEncontrado.getDni(),
-            clienteEncontrado.getNombre(),
+            clienteEncontrado.getNombres(),
             clienteEncontrado.getApellido(),
             clienteEncontrado.getSexo(),
             clienteEncontrado.getTelefono(),
             clienteEncontrado.getCiudad(),
             clienteEncontrado.getEmail()
         });
-        JOptionPane.showMessageDialog(this, "Clienteencontrado", "Resultado de búsqueda", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Cliente " + clienteEncontrado.getNombres() + " encontrado", "Resultado de búsqueda", JOptionPane.INFORMATION_MESSAGE);
         mostrarClientesEnTabla();
 
     } else {
-        // Si no se encontró el cliente, mostramos un mensaje
         JOptionPane.showMessageDialog(this, "Cliente no encontrado", "Resultado de búsqueda", JOptionPane.INFORMATION_MESSAGE);
         mostrarClientesEnTabla();
     }
@@ -648,7 +688,6 @@ private void limpiarCampos() {
     jTextField1.setEnabled(true);
     jTable2.clearSelection();
     
-    jTable2.clearSelection();
 }
 
  

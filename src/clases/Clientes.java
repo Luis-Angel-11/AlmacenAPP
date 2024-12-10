@@ -2,16 +2,16 @@ package clases;
 
 public class Clientes {
     private String dni;
-    private String nombre;
+    private String nombres;
     private String apellido;
     private String sexo;
     private String telefono;
     private String ciudad;
     private String email;
 
-    public Clientes(String dni, String nombre, String apellido, String sexo, String telefono, String ciudad, String email) {
+    public Clientes(String dni, String nombres, String apellido, String sexo, String telefono, String ciudad, String email) {
         this.dni = dni;
-        this.nombre = nombre;
+        this.nombres = nombres;
         this.apellido = apellido;
         this.sexo = sexo;
         this.telefono = telefono;
@@ -19,8 +19,8 @@ public class Clientes {
         this.email = email;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombres() {
+        return nombres;
     }
 
     public String getDni() {
@@ -47,8 +47,8 @@ public class Clientes {
         return email;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre(String nombres) {
+        this.nombres = nombres;
     }
 
     public void setDni(String dni) {
@@ -77,7 +77,7 @@ public class Clientes {
 
     @Override
     public String toString() {  
-        return "Cliente [nombre=" + nombre + ", dni=" + dni + ", apellido=" + apellido + ", sexo=" + sexo 
+        return "Cliente [nombre=" + nombres + ", dni=" + dni + ", apellido=" + apellido + ", sexo=" + sexo 
                 + ", telefono=" + telefono + ", ciudad=" + ciudad + ", email=" + email + "]";
     }
 }

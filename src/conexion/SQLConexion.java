@@ -11,9 +11,9 @@ public class SQLConexion {
 
     public SQLConexion() {
         this.driver = "com.mysql.cj.jdbc.Driver";
-        this.url = "jdbc:mysql://localhost:3306/almacen?servevrTimezone=UTC";
+        this.url = "jdbc:mysql://localhost:3306/almacen?useSSL=false&serverTimezone=America/Bogota";
         this.login = "root";
-        this.clave = "root";    
+        this.clave = "Joehxd123!";    
     }
     
     public static SQLConexion getConexion(){
