@@ -245,7 +245,7 @@ public class ArbolOrdenes {
             }
             System.out.println();
         } else {
-            System.out.println("No hay Órdenes registradas.\n");
+            System.out.println("No hay ordenes");
         }
     }
 

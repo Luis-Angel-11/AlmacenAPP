@@ -45,7 +45,7 @@
 
                     agregarCliente(cliente);
                 }
-                System.out.println("Datos de clientes cargados desde la base de datos.");
+                System.out.println("datos cargaodsss");
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -81,7 +81,7 @@
 
             for (Clientes c : lista) {
                 if (c.getDni().equals(cliente.getDni())) {
-                    System.out.println("El cliente con DNI " + cliente.getDni() + " ya está registrado.");
+                    System.out.println("El cliente con DNI " + cliente.getDni() + " ya esta registrado.");
                     return;
                 }
             }
@@ -141,9 +141,9 @@
             if (clienteAEliminar != null) {
                 lista.remove(clienteAEliminar);
                 cantidadElementos--;
-                System.out.println("Cliente eliminado de la tabla hash.");
+                System.out.println("Cliente eliminado de la tabla");
             } else {
-                System.out.println("Cliente no encontrado en la tabla hash.");
+                System.out.println("Cliente no encontrado en la tabla ");
             }
         }
 

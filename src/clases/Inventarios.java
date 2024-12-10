@@ -8,25 +8,25 @@ package clases;
  *
  * @author ASUS
  */
-public class Inventario {
-    private String id;
+public class Inventarios {
+    private int id;
     private String producto;
     private int cantidad;
     private String motivo;
     //private String fecha;
 
-    public Inventario(String id, String producto, int cantidad, String motivo) {
+    public Inventarios(int id, String producto, int cantidad, String motivo) {
         this.id = id;
         this.producto = producto;
         this.cantidad = cantidad;
         this.motivo = motivo;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
