@@ -20,6 +20,7 @@ public class Producto extends javax.swing.JPanel {
     public Producto() {
         initComponents();
         cargarProveedores();
+        configurarEventos();
     }
 
     /**
@@ -51,6 +52,8 @@ public class Producto extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanelListaP = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(650, 420));
@@ -133,29 +136,29 @@ public class Producto extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Registro", jPanelRegistroP);
 
-        javax.swing.GroupLayout jPanelListaPLayout = new javax.swing.GroupLayout(jPanelListaP);
-        jPanelListaP.setLayout(jPanelListaPLayout);
-        jPanelListaPLayout.setHorizontalGroup(
-            jPanelListaPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
-        );
-        jPanelListaPLayout.setVerticalGroup(
-            jPanelListaPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 390, Short.MAX_VALUE)
-        );
+        jPanelListaP.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTabbedPane1.addTab("Lista", jPanelListaP);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {"ID", "Nombre", "Precio", "Cantidad", "Categoría", "Estado", "Proveedor"}
+        )
+    );
+    jScrollPane1.setViewportView(jTable1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
-        );
+    jPanelListaP.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 440, 310));
+
+    jTabbedPane1.addTab("Lista", jPanelListaP);
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+    this.setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(jTabbedPane1)
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+    );
     }// </editor-fold>//GEN-END:initComponents
 
     private void TextNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextNombreActionPerformed
@@ -210,6 +213,7 @@ public class Producto extends javax.swing.JPanel {
         if (exito) {
             JOptionPane.showMessageDialog(this, "Producto agregado correctamente.");
             limpiarCampos(); // Limpia los campos después de insertar
+            cargarProductosEnTabla();
         } else {
             JOptionPane.showMessageDialog(this, "Error al agregar el producto.");
         }
@@ -218,6 +222,15 @@ public class Producto extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
+    private void configurarEventos() {
+    jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+        public void stateChanged(javax.swing.event.ChangeEvent evt) {
+            if (jTabbedPane1.getSelectedIndex() == 1) { // Índice 1 corresponde a la pestaña "Lista"
+                cargarProductosEnTabla(); // Llamar al método que carga los datos en la tabla
+            }
+        }
+    });
+    }
     private void limpiarCampos() {
     TextID.setText("");
     TextNombre.setText("");
@@ -242,8 +255,33 @@ public class Producto extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "No hay proveedores disponibles.");
     }
     }
+    
+    private void cargarProductosEnTabla() {
+    // Crear una instancia de productoBD para obtener los productos
+    productoBD productoBD = new productoBD();
+    List<producto> producto = productoBD.listarProductos(); // Obtener productos desde la base de datos
 
+    // Crear el modelo de la tabla si no lo tienes definido
+    String[] columnNames = {"ID", "Nombre", "Precio", "Cantidad", "Categoría", "Estado", "Proveedor"};
+    javax.swing.table.DefaultTableModel modeloTabla = new javax.swing.table.DefaultTableModel(columnNames, 0);
 
+    // Agregar los productos al modelo de la tabla
+    for (producto p : producto) {
+        Object[] fila = {
+            p.getId(),
+            p.getNombre(),
+            p.getPrecio(),
+            p.getCantidad(),
+            p.getCategoria(),
+            p.getEstado(),
+            p.getProveedor().getNombre() // Asegúrate de que `getNombre()` esté implementado en tu clase `proveedor`
+        };
+        modeloTabla.addRow(fila);
+    }
+
+    // Asignar el modelo a la tabla
+    jTable1.setModel(modeloTabla);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CantidadP;
@@ -264,7 +302,9 @@ public class Producto extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanelListaP;
     private javax.swing.JPanel jPanelRegistroP;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
