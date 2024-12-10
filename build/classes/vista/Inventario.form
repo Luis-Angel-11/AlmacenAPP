@@ -62,13 +62,10 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="rbtnSalida" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="cbxMotivo" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="Fecha" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="txtID" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtCantidad" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtCodigo" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="txtID" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtCantidad" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtCodigo" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
@@ -118,8 +115,6 @@
                               <Component id="txtCantidad" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="txtID" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="Fecha" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
@@ -188,8 +183,6 @@
             <Component class="javax.swing.JTextField" name="txtCantidad">
             </Component>
             <Component class="javax.swing.JTextField" name="txtID">
-            </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="Fecha">
             </Component>
             <Component class="javax.swing.JButton" name="btnEliminar">
               <Properties>

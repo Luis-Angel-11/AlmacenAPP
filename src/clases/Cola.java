@@ -75,7 +75,7 @@ public class Cola<T> {
         }
         Nodo1<T> actual = frente;
         while (actual != null) {
-            System.out.println(actual.clase);
+            System.out.println(actual.clase );
             actual = actual.siguiente;
         }
     }
