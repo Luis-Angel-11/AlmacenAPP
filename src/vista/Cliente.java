@@ -588,13 +588,7 @@ private void eliminarCliente(java.awt.event.ActionEvent evt) {
 
                 mostrarClientesEnTabla();
 
-                jTextField1.setText("");
-                jTextField2.setText("");
-                jTextField3.setText("");
-                jComboBox1.setSelectedIndex(0);
-                jTextField4.setText("");
-                jTextField5.setText("");
-                jTextField6.setText("");
+                limpiarCampos();
             } else {
                 JOptionPane.showMessageDialog(this, "No se pudo actualizar el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
             }

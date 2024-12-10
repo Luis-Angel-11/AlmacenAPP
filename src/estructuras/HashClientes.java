@@ -55,12 +55,12 @@
         private String calcularHash(String dni, String nombre, String apellido) {
             try {
                 String input = dni + nombre + apellido;
-                MessageDigest digest = MessageDigest.getInstance("SHA-256");
-                byte[] hashBytes = digest.digest(input.getBytes());
+                MessageDigest digest = MessageDigest.getInstance("SHA-256"); //genera un hash de 256 bits
+                byte[] hashBytes = digest.digest(input.getBytes());// genera el hash de entrada en formato de bytes.
 
                 StringBuilder hexString = new StringBuilder();
                 for (byte b : hashBytes) {
-                    hexString.append(String.format("%02x", b));
+                    hexString.append(String.format("%02x", b)); // convierte cada byte a su representación hexadecima
                 }
 
                 return hexString.toString().substring(0, 8); 
@@ -72,7 +72,6 @@
         }
 
         public void agregarCliente(Clientes cliente) {
-            redimensionarTabla(); 
 
             String hash = calcularHash(cliente.getDni(), cliente.getNombres(), cliente.getApellido());
             int indice = Math.abs(hash.hashCode()) % tablaClientes.length;  
@@ -91,24 +90,6 @@
             System.out.println("Cliente con DNI " + cliente.getDni() + " agregado.");
         }
 
-        private void redimensionarTabla() {
-            if (cantidadElementos >= tablaClientes.length) {
-                System.out.println("Redimensionando la tabla...");
-                LinkedList<Clientes>[] nuevaTabla = new LinkedList[tablaClientes.length * 2];
-                for (int i = 0; i < nuevaTabla.length; i++) {
-                    nuevaTabla[i] = new LinkedList<>();
-                }
-
-                for (LinkedList<Clientes> lista : tablaClientes) {
-                    for (Clientes cliente : lista) {
-                        String hash = calcularHash(cliente.getDni(), cliente.getNombres(), cliente.getApellido());
-                        int indice = Math.abs(hash.hashCode()) % nuevaTabla.length;
-                        nuevaTabla[indice].add(cliente);
-                    }
-                }
-                tablaClientes = nuevaTabla; 
-            }
-        }
 
         public void imprimirClientes() {
             System.out.println("Clientes registrados en la tabla hash:");
@@ -121,7 +102,7 @@
                 }
             }
         }
-
+        
         public void eliminarCliente(String dni) {
             String hash = calcularHash(dni, "", "");
             int indice = Math.abs(hash.hashCode()) % tablaClientes.length;

@@ -25,9 +25,9 @@ public class ArbolOrdenes {
         }
 
         if (orden.getIdOrden() < raiz.getOrden().getIdOrden()) {
-            raiz.setIzquierdo(insertarRec(raiz.getIzquierdo(), orden));
+            raiz.setIzquierdo(insertarRec(raiz.getIzquierdo(), orden)); // si el id es menor, va a la izquierda
         } else if (orden.getIdOrden() > raiz.getOrden().getIdOrden()) {
-            raiz.setDerecho(insertarRec(raiz.getDerecho(), orden));
+            raiz.setDerecho(insertarRec(raiz.getDerecho(), orden)); // si el id es mayor, va a la derecha
         } else {
             System.out.println("Orden con ID " + orden.getIdOrden() + " ya existe. Inserción ignorada.");
         }
@@ -47,9 +47,9 @@ public class ArbolOrdenes {
         if (raiz.getOrden().getIdOrden() == idOrden) {
             return raiz.getOrden();
         } else if (idOrden < raiz.getOrden().getIdOrden()) {
-            return buscarRec(raiz.getIzquierdo(), idOrden);
+            return buscarRec(raiz.getIzquierdo(), idOrden);  // busca en el nodo izquierdo
         } else {
-            return buscarRec(raiz.getDerecho(), idOrden);
+            return buscarRec(raiz.getDerecho(), idOrden); //busca en el nodo derecho
         }
     }
 
@@ -77,9 +77,9 @@ public class ArbolOrdenes {
         }
 
         if (idOrden < raiz.getOrden().getIdOrden()) {
-            raiz.setIzquierdo(eliminarRec(raiz.getIzquierdo(), idOrden));
+            raiz.setIzquierdo(eliminarRec(raiz.getIzquierdo(), idOrden)); // Busca en izquierdo
         } else if (idOrden > raiz.getOrden().getIdOrden()) {
-            raiz.setDerecho(eliminarRec(raiz.getDerecho(), idOrden));
+            raiz.setDerecho(eliminarRec(raiz.getDerecho(), idOrden)); // Buscar en derecho
         } else {
             if (raiz.getIzquierdo() == null) {
                 return raiz.getDerecho();
